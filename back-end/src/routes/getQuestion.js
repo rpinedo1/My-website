@@ -1,19 +1,15 @@
-import { data } from "../db/data";
-
+import * as Question from '../db/questionsModel'
 
 export const getQuestion = {
     method: 'get',
     path: '/question/:id',
-    handler: (req, res) => {
+    handler: async (req, res) => {
         const id = req.params.id;
+        const question = await Question.getOne(id);
 
-        if (!data.questions[id]){
-            return res.status(404).send(`Question Not Found`);
-        }
-        
         res.status(200)
         res.send({
-            [id] : data.questions[id]
+            questions : question,
         })
 
     }

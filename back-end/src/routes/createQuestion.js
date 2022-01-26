@@ -1,18 +1,21 @@
-import { data } from "../db/data";
-import { v4 as uuid } from "uuid";
+import * as Question from '../db/questionsModel';
 
 export const createQuestion = {
     method: 'post',
-    path: '/questions',
-    handler: (req, res) => {
+    path: '/question',
+    handler: async (req, res) => {
         const newQuestion = req.body.question;
-        newQuestion.id = uuid();
+        // insertedId is output when something is inserted, it is the Id that is created when something is first inserted into MongoDB
+        const { insertedId } = await Question.insertOne(newQuestion);
 
-        data.questions[question.id] = newQuestion;
-        res.status(200).send({
-            questions: {
-                [newQuestion.id]: newQuestion
-            }
+        // get all the questions including the updated one
+        const questions  = await Question.getAll();
+        
+        // returning all the questions and the insertedId to check that it's in there
+        res.status(200)
+        res.send({
+            questions,
+            insertedId,
         })
     },
 }

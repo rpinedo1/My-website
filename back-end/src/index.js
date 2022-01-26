@@ -1,4 +1,5 @@
 import express from 'express';
+// importing all the route handlers
 import * as routes from './routes';
 import * as db from './db/connect';
 
@@ -45,3 +46,4 @@ const start = async () => {
 
 start();
 
+// to run app on dev mode run : 'npm run dev'

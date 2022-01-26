@@ -1,20 +1,15 @@
-import { data } from "../db/data";
+import * as Question from '../db/questionsModel';
 
 export const deleteQuestion = {
     method: 'delete',
     path: '/question/:id',
-    handler: (req, res) => {
+    handler: async (req, res) => {
         const id = req.params.id;
-
-        if (!data.questions[id]){
-            return res.status(404).send("That question does not exist.")
-        }
-
-        delete data.questions[id];
-        
+        const result = await Question.deleteOne(id);
+      
         res.status(200)
         res.send({
-            [id]: data.questions[id],
+            deleted: true,
         })       
 
     }

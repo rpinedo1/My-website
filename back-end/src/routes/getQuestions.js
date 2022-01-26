@@ -1,10 +1,13 @@
-import { data } from "../db/data";
+import * as Question from '../db/questionsModel';
 
-// this is a way to export the route as an objecty to keep from clutering the main index.js file
+// these objects are called route handlers
 export const getQuestions = {
     method: 'get',
     path: '/questions',
-    handler: (req, res) => {
-        res.status(200).send(data.questions);
+    handler: async (req, res) => {
+        const questions = await Question.getAll();
+        
+        res.status(200)
+        res.send({ questions });
     },
 }

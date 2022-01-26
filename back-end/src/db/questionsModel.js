@@ -38,7 +38,7 @@ export const updateOne = async (questionId, updates) => {
     // for this one, we first pass in the query/filter ( in this case we query by '_id')
     // then, for that result, we are going to '$set' the 'updates'
     // this '$set' will actually 'MERGE' the passed in 'updates' with the existing 'objects in the DB'
-    const result = await question.updateOne(
+    const result = await questions.updateOne(
         { _id: ObjectId(questionId) },
         {
             $set: updates,
